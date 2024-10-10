@@ -1,0 +1,145 @@
+.card {
+    display: flex;
+    flex-direction: column; /* По умолчанию карточка в столбик для мобильных */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 20px;
+}
+
+.main-container {
+    display: flex;
+    width: 100%;
+}
+
+.images {
+    position: relative;
+    width: 100%;
+    height: 300px; /* Установите нужную высоту для главного изображения */
+    overflow: hidden;
+}
+
+.main-image {
+    width: 100%;
+    height: 100%;
+    object-fit: none; /* Заполнение контейнера */
+}
+
+.thumbnail-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.thumbnails {
+    display: flex;
+    overflow-x: auto; /* Горизонтальная прокрутка для миниатюр */
+}
+
+.thumbnail {
+    width: 60px; /* Ширина миниатюры */
+    height: auto;
+    cursor: pointer;
+    margin: 0 5px;
+    transition: transform 0.2s;
+}
+
+.thumbnail.active {
+    border: 2px solid blue; /* Обозначение активной миниатюры */
+}
+
+.thumbnail:hover {
+    transform: scale(1.1); /* Увеличение при наведении */
+}
+
+.arrow {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    user-select: none; /* Убираем выделение текста */
+}
+
+.left-arrow {
+    margin-right: 10px; /* Отступ справа от левой стрелки */
+}
+
+.right-arrow {
+    margin-left: 10px; /* Отступ слева от правой стрелки */
+}
+
+.images img {
+    width: 100%; /* Адаптивная ширина изображений */
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.card-content {
+    padding: 10px; /* Уменьшенные отступы для мобильных */
+}
+
+.card-content h3 {
+    margin: 0;
+    font-size: 1.5em; /* Размер заголовка */
+    overflow-wrap: break-word; /* Перенос слов при необходимости */
+}
+
+.card-content p {
+    margin: 5px 0;
+    font-size: 0.9em; /* Уменьшенный размер текста для мобильных */
+}
+
+.rooms-list {
+    max-height: 150px; /* Максимальная высота для прокручиваемого списка */
+    overflow-y: auto; /* Прокрутка для списка помещений */
+    border-top: 1px solid #ddd;
+    padding-top: 10px;
+}
+
+/* Адаптационные стили для экранов от 768px и выше */
+@media (min-width: 768px) {
+    .main-image {
+        height: 200px; /* Уменьшаем высоту для планшетов и мобильных */
+    }
+
+    .thumbnail {
+        width: 50px; /* Уменьшаем ширину миниатюры */
+    }
+    
+    .card {
+        flex-direction: row; /* Горизонтальное расположение для больших экранов */
+        margin: 10px;
+    }
+
+    .images {
+        width: 300px; /* Фиксированная ширина для изображений на больших экранах */
+        border-right: 1px solid #ddd;
+    }
+
+    .card-content {
+        padding: 20px; /* Увеличенные отступы для больших экранов */
+    }
+
+    .card-content h3 {
+        font-size: 1.75em; /* Увеличенный размер заголовка для больших экранов */
+    }
+
+    .card-content p {
+        font-size: 1em; /* Нормальный размер текста для больших экранов */
+    }
+}
+
+@media (max-width: 480px) {
+    .main-image {
+        height: 150px; /* Уменьшаем высоту для мобильных */
+    }
+
+    .thumbnail {
+        width: 40px; /* Уменьшаем ширину миниатюры для мобильных */
+    }
+
+    .arrow {
+        font-size: 20px; /* Уменьшаем размер текста для стрелок */
+    }
+}

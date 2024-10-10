@@ -28,7 +28,7 @@ const YourComponent = () => {
         <div>
             <h1>Данные из базы</h1>
             <ul>    
-                <CardList dataList={data} />;
+                <CardList dataList={data} />
             </ul>
         </div>
     );
