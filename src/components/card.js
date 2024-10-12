@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import ByteArrayToImage from '../converters/byteToImg';
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa'; // Importing arrow icons
 import '../styles/card.css'
 
 const Card = ({ data }) => {
@@ -17,34 +18,41 @@ const Card = ({ data }) => {
         <div className="card">
             <div className="main-container">
                 <div className='images'>
+                    <div className="arrow left" onClick={prevImage}>
+                        <FaChevronLeft />
+                    </div>
                     {data.images && data.images.length > 0 ? (
-                        <div>
+                        <div className='main-image'>
                             {data.images.map((image, index) => (
                                 <ByteArrayToImage 
                                     key={index} 
                                     byteArray={data.images[currentIndex].replace(/^\"|\"$/g, '')} // Убираем кавычки
-                                    className="main-image"
                                 /> 
                             ))}
                         </div>
                     ) : (
                         <p>Изображения отсутствуют</p>
                     )}
-                </div>
-                <div className="thumbnail-container">
-                    <button onClick={prevImage} className="arrow left-arrow">←</button>
-                    <div className="thumbnails">
-                        {data.images.map((image, index) => (
-                            <ByteArrayToImage 
-                                key={index} 
-                                byteArray={image.replace(/^\"|\"$/g, '')} 
-                                className={`thumbnail ${currentIndex === index ? 'active' : ''}`}
-                                onClick={() => setCurrentIndex(index)} // Добавляем выбор миниатюры
-                            />
-                        ))}
+                    <div className="arrow right" onClick={nextImage}>
+                        <FaChevronRight />
                     </div>
-                    <button onClick={nextImage} className="arrow right-arrow">→</button>
+
+                    <div className="thumbnails">
+                    {data.images && data.images.length > 0 && data.images.map((image, index) => (
+                        <div 
+                            key={index} 
+                            className={`thumbnail ${index === currentIndex ? 'active' : ''}`}
+                            onClick={() => setCurrentIndex(index)}
+                        >
+                            <ByteArrayToImage 
+                                byteArray={image.replace(/^\"|\"$/g, '')}
+                                className="thumbnail-image"
+                            />
+                        </div>
+                    ))}
+                    </div>
                 </div>
+            
             </div>
 
             <div className="card-content">
@@ -54,7 +62,7 @@ const Card = ({ data }) => {
                 <p>Общее доступное количество: {data.availableTotalAll}</p>
                 <p>Площадь офиса: {data.glaOffice} м²</p>
                 <p>Дата проверки: {data.researchCheckdate}</p>
-                <p>Помещения:</p>
+                <p>Доступные помещения:</p>
                 <div className="rooms-list">
                     {data.rooms && data.rooms.length > 0 ? (
                         <ul>
