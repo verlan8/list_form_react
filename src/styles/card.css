@@ -1,3 +1,5 @@
+
+
 .card {
     display: flex;
     flex-direction: column; /* По умолчанию карточка в столбик для мобильных */
@@ -13,11 +15,12 @@
     width: 100%;  /* Make sure it spans full width */
     height: 100%; /* Set a desired height */
     overflow: hidden; /* Hide overflow */
+    align-items: center;
 }
 
 .main-image {
     position: relative;
-    width: 70%;
+    width: 90%;
     height: 100%;
     object-fit: cover; /* Makes the image cover the container */
 }
@@ -47,14 +50,14 @@
 
 .card-content p {
     margin: 5px 0;
-    font-size: 0.9em; /* Уменьшенный размер текста для мобильных */
+    font-size: 0.7em; /* Уменьшенный размер текста для мобильных */
 }
 
 .rooms-list {
-    max-height: 150px; /* Максимальная высота для прокручиваемого списка */
+    max-height: 14rem; /* Максимальная высота для прокручиваемого списка */
     overflow-y: auto; /* Прокрутка для списка помещений */
     border-top: 1px solid #ddd;
-    padding-top: 10px;
+    padding-top: 1%;
 }
 
 .arrow {
@@ -76,8 +79,21 @@
     right: 10px; /* Position to right */
 }
 
-/* Other CSS styles remain unchanged */
+.rooms-list-container {
+    width: 100%;
+    max-width: 360px;
+    background-color: var(--background-color, #fff); /* Можно использовать переменные CSS для адаптивных тем */
+    margin: 0 auto; /* Центрируем контейнер */
+    padding: 20px; /* Добавляем отступы */
+}
 
+.MuiListItemButton-root {
+    margin-bottom: 10px; /* Отступы между элементами списка */
+}
+
+.Mui-selected {
+    background-color: rgba(0, 0, 255, 0.2); /* Фон для выделенного элемента */
+}
 
 /* Адаптационные стили для экранов от 768px и выше */
 @media (min-width: 768px) {
@@ -101,6 +117,10 @@
 
     .card-content h3 {
         font-size: 1.75em; /* Увеличенный размер заголовка для больших экранов */
+    }
+
+    .rooms-list-container {
+        max-width: 100%; /* На мобильных устройствах занимаем 100% ширины */
     }
 
     .card-content p {

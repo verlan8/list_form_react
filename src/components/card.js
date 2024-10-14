@@ -1,7 +1,47 @@
 import React, { useState } from 'react';
 import ByteArrayToImage from '../converters/byteToImg';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa'; // Importing arrow icons
+import { 
+    Card as MuiCard, 
+    CardContent, 
+    Typography, 
+    IconButton,
+    Box, 
+    List, 
+    ListItemButton, 
+    ListItemText 
+} from '@mui/material';
 import '../styles/card.css'
+
+const RoomsList = ({ rooms }) => {
+    const [selectedIndex, setSelectedIndex] = React.useState(null);
+
+    const handleListItemClick = (index) => {
+        setSelectedIndex(index);
+    }
+
+
+    return (
+        <Box className="rooms-list-container">
+            <List component="nav" className='rooms-list' aria-label="rooms list">
+                {rooms && rooms.length > 0 ? (
+                    rooms.map((room, index) => (
+                        <ListItemButton
+                            key={room.id}
+                            selected={selectedIndex === index}
+                            onClick={() => handleListItemClick(index)}
+                        >
+                            <ListItemText
+                                primary={`${room.floor} этаж`}
+                                secondary={`${room.divisible_from} м² ${room.gross_rent_rur} ₽/мес.`}
+                            />
+                        </ListItemButton>
+                    ))
+                ) : ''}
+            </List>
+        </Box>
+    );
+};
 
 const Card = ({ data }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -15,12 +55,12 @@ const Card = ({ data }) => {
     };
 
     return (
-        <div className="card">
+        <MuiCard  className="card">
             <div className="main-container">
                 <div className='images'>
-                    <div className="arrow left" onClick={prevImage}>
+                    <IconButton onClick={prevImage}>
                         <FaChevronLeft />
-                    </div>
+                    </IconButton>
                     {data.images && data.images.length > 0 ? (
                         <div className='main-image'>
                             {data.images.map((image, index) => (
@@ -31,11 +71,11 @@ const Card = ({ data }) => {
                             ))}
                         </div>
                     ) : (
-                        <p>Изображения отсутствуют</p>
+                        <p variant="body2">Изображения отсутствуют</p>
                     )}
-                    <div className="arrow right" onClick={nextImage}>
+                    <IconButton onClick={nextImage}>
                         <FaChevronRight />
-                    </div>
+                    </IconButton>
 
                     <div className="thumbnails">
                     {data.images && data.images.length > 0 && data.images.map((image, index) => (
@@ -55,27 +95,21 @@ const Card = ({ data }) => {
             
             </div>
 
-            <div className="card-content">
-                <h3>{data.nameRus} / {data.nameEng}</h3>
-                <p>Статус: {data.status}</p>
-                <p>Город: {data.addressCity}</p>
-                <p>Общее доступное количество: {data.availableTotalAll}</p>
-                <p>Площадь офиса: {data.glaOffice} м²</p>
-                <p>Дата проверки: {data.researchCheckdate}</p>
-                <p>Доступные помещения:</p>
-                <div className="rooms-list">
-                    {data.rooms && data.rooms.length > 0 ? (
-                        <ul>
-                            {data.rooms.map((room) => (
-                                <li key={room.id}> {room.floor} этаж {room.divisible_from} м² {room.gross_rent_rur} ₽/мес.</li>
-                            ))}
-                        </ul>
-                    ) : (
-                        <p>Нет доступных помещений</p>
-                    )}
-                </div>
-            </div>
-        </div>
+            <CardContent className='card-content'>
+                <Typography variant="h6">{data.nameRus} / {data.nameEng}</Typography>
+                <Typography variant="body2">Статус: {data.status}</Typography>
+                <Typography variant="body2">Город: {data.addressCity}</Typography>
+                <Typography variant="body2">Общее доступное количество: {data.availableTotalAll} м²</Typography>
+                <Typography variant="body2">Площадь офиса: {data.glaOffice} м²</Typography>
+                <Typography variant="body2">Дата проверки: {data.researchCheckdate}</Typography>
+                {data.rooms && data.rooms.length > 0 ? (
+                    <>
+                        <Typography variant="body2">Доступные помещения:</Typography> 
+                        <RoomsList rooms={data.rooms} />
+                    </>
+                ) : null}
+            </CardContent>
+        </MuiCard >
     );
 };
 
