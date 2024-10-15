@@ -6,7 +6,7 @@ const ByteArrayToImage = ({ byteArray }) => {
     const imageSrc = `data:image/jpeg;base64,${byteArray}`;
 
     return (
-        <img src={imageSrc} alt="" style={{ width: '100px', height: '100px' }} />
+        <img src={imageSrc} alt="" style={{ width: '100%', height: 'auto' }} />
     );
 };
 

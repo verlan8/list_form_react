@@ -1,12 +1,10 @@
-
-
 .card {
     display: flex;
-    flex-direction: column; /* По умолчанию карточка в столбик для мобильных */
+    flex-direction: column; /*По умолчанию карточка в столбик для мобильных */
     border: 1px solid #ddd;
     border-radius: 8px;
     overflow: hidden;
-    margin: 20px;
+    width: 100%;
 }
 
 .images {
@@ -20,8 +18,8 @@
 
 .main-image {
     position: relative;
-    width: 90%;
-    height: 100%;
+    width: 100%;
+    height: auto;
     object-fit: cover; /* Makes the image cover the container */
 }
 
@@ -33,6 +31,7 @@
 .thumbnails {
     flex-direction: column;
     width: 30%;
+    margin-right: 5px;
 }
 
 .thumbnail {
@@ -41,6 +40,9 @@
 
 .card-content {
     padding: 10px; /* Уменьшенные отступы для мобильных */
+    width: 100%;
+    margin-left: 5px;
+    margin-right: 5px;
 }
 
 .card-content h3 {
@@ -53,8 +55,14 @@
     font-size: 0.7em; /* Уменьшенный размер текста для мобильных */
 }
 
+.card-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(40rem, 1fr)); /* Автоматически подстраивает количество колонн */
+    gap: 20px; /* Отступы между карточками */
+}
+
 .rooms-list {
-    max-height: 14rem; /* Максимальная высота для прокручиваемого списка */
+    max-height: 10rem; /* Максимальная высота для прокручиваемого списка */
     overflow-y: auto; /* Прокрутка для списка помещений */
     border-top: 1px solid #ddd;
     padding-top: 1%;
@@ -80,11 +88,8 @@
 }
 
 .rooms-list-container {
-    width: 100%;
-    max-width: 360px;
     background-color: var(--background-color, #fff); /* Можно использовать переменные CSS для адаптивных тем */
     margin: 0 auto; /* Центрируем контейнер */
-    padding: 20px; /* Добавляем отступы */
 }
 
 .MuiListItemButton-root {
@@ -98,16 +103,15 @@
 /* Адаптационные стили для экранов от 768px и выше */
 @media (min-width: 768px) {
     .main-image {
-        height: 400px; /* Уменьшаем высоту для планшетов и мобильных */
+        
     }
     
     .card {
         flex-direction: row; /* Горизонтальное расположение для больших экранов */
-        margin: 10px;
     }
 
     .images {
-        width: 500px; /* Фиксированная ширина для изображений на больших экранах */
+        width: 400px; /* Фиксированная ширина для изображений на больших экранах */
         border-right: 1px solid #ddd;
     }
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import ByteArrayToImage from '../converters/byteToImg';
-import { FaChevronLeft, FaChevronRight } from 'react-icons/fa'; // Importing arrow icons
+import ByteArrayToImage from '../utils/converters/byteToImg';
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { 
     Card as MuiCard, 
     CardContent, 
@@ -63,12 +63,9 @@ const Card = ({ data }) => {
                     </IconButton>
                     {data.images && data.images.length > 0 ? (
                         <div className='main-image'>
-                            {data.images.map((image, index) => (
-                                <ByteArrayToImage 
-                                    key={index} 
-                                    byteArray={data.images[currentIndex].replace(/^\"|\"$/g, '')} // Убираем кавычки
-                                /> 
-                            ))}
+                            <ByteArrayToImage 
+                                byteArray={data.images[currentIndex].replace(/^\"|\"$/g, '')} // Убираем кавычки
+                            /> 
                         </div>
                     ) : (
                         <p variant="body2">Изображения отсутствуют</p>
@@ -114,3 +111,13 @@ const Card = ({ data }) => {
 };
 
 export default Card;
+
+
+// // <div className='main-image'>
+// { data.images.map((image, index) => (
+//     <ByteArrayToImage 
+//         key={index} 
+//         byteArray={data.images[currentIndex].replace(/^\"|\"$/g, '')} // Убираем кавычки
+//     /> 
+// ))}
+// </div>

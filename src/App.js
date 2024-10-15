@@ -8,36 +8,25 @@ import {
 } from '@mui/material';
 import CardList from './components/cardlist';
 import Search from './components/search';
-
+import useFetchData from './hooks/useFetchData';
+import './styles/card.css'
 
 //получаю list<byte[]> images -> преобразовать в картинки
 const AppComponent = () => {
-    const [data, setData] = useState([]);
+    const [data, fetchData] = useFetchData();
+    // const [data, setData] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [minArea, setMinArea] = useState("");
     const [maxArea, setMaxArea] = useState("");
     const [minRent, setMinRent] = useState("");
     const [maxRent, setMaxRent] = useState("");
 
-    useEffect(() => {
-        fetchData();
-    }, []);
-
-    const fetchData = async () => {
-        try {
-            const response = await axios.get('https://localhost:7168/api/ListForm');
-            updateDataList(response.data);
-        } catch (error) {
-            console.error('Ошибка при получении данных', error);
-        }
-    };
-
     const updateDataList = (data) => {
         const dataList = data.map(item => ({
             ...item,
             images: item.images 
         }));
-        setData(dataList);
+        fetchData(dataList);
     };
 
     const handleSearch = async () => {
@@ -74,7 +63,7 @@ const AppComponent = () => {
     };
 
     return (
-        <Container>
+        <Container className='building-office-container custom-container' maxWidth={false}>
             <Typography variant="h4" gutterBottom>
                 Данные из базы
             </Typography>
@@ -88,7 +77,7 @@ const AppComponent = () => {
                 handleFilterChange={handleFilterChange}
                 handleSearch={handleSearch}
             />
-            <Paper elevation={3} sx={{ padding: 2 }}>
+            <Paper className='paper-classlist custom-paper' elevation={3} sx={{ padding: 2 }}>
                 <CardList dataList={data} />
             </Paper>
         </Container>
