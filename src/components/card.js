@@ -5,43 +5,13 @@ import {
     Card as MuiCard, 
     CardContent, 
     Typography, 
-    IconButton,
-    Box, 
-    List, 
-    ListItemButton, 
-    ListItemText 
+    IconButton
 } from '@mui/material';
-import '../styles/card.css'
+import RoomsList from './roomsList';
+import '../styles/buildingOffices/card.css'
+import '../styles/buildingOffices/images.css'
+import '../styles/buildingOffices/arrow.css'
 
-const RoomsList = ({ rooms }) => {
-    const [selectedIndex, setSelectedIndex] = React.useState(null);
-
-    const handleListItemClick = (index) => {
-        setSelectedIndex(index);
-    }
-
-
-    return (
-        <Box className="rooms-list-container">
-            <List component="nav" className='rooms-list' aria-label="rooms list">
-                {rooms && rooms.length > 0 ? (
-                    rooms.map((room, index) => (
-                        <ListItemButton
-                            key={room.id}
-                            selected={selectedIndex === index}
-                            onClick={() => handleListItemClick(index)}
-                        >
-                            <ListItemText
-                                primary={`${room.floor} этаж`}
-                                secondary={`${room.divisible_from} м² ${room.gross_rent_rur} ₽/мес.`}
-                            />
-                        </ListItemButton>
-                    ))
-                ) : ''}
-            </List>
-        </Box>
-    );
-};
 
 const Card = ({ data }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -75,18 +45,18 @@ const Card = ({ data }) => {
                     </IconButton>
 
                     <div className="thumbnails">
-                    {data.images && data.images.length > 0 && data.images.map((image, index) => (
-                        <div 
-                            key={index} 
-                            className={`thumbnail ${index === currentIndex ? 'active' : ''}`}
-                            onClick={() => setCurrentIndex(index)}
-                        >
-                            <ByteArrayToImage 
-                                byteArray={image.replace(/^\"|\"$/g, '')}
-                                className="thumbnail-image"
-                            />
-                        </div>
-                    ))}
+                        {data.images && data.images.length > 0 && data.images.map((image, index) => (
+                            <div 
+                                key={index} 
+                                className={`thumbnail ${index === currentIndex ? 'active' : ''}`}
+                                onClick={() => setCurrentIndex(index)}
+                            >
+                                <ByteArrayToImage 
+                                    byteArray={image.replace(/^\"|\"$/g, '')}
+                                    className="thumbnail-image"
+                                />
+                            </div>
+                        ))}
                     </div>
                 </div>
             
@@ -111,13 +81,3 @@ const Card = ({ data }) => {
 };
 
 export default Card;
-
-
-// // <div className='main-image'>
-// { data.images.map((image, index) => (
-//     <ByteArrayToImage 
-//         key={index} 
-//         byteArray={data.images[currentIndex].replace(/^\"|\"$/g, '')} // Убираем кавычки
-//     /> 
-// ))}
-// </div>

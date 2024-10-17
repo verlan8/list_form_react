@@ -1,0 +1,45 @@
+.images {
+    display: flex;
+    position: relative;
+    width: 100%;  /* Make sure it spans full width */
+    height: 100%; /* Set a desired height */
+    overflow: hidden; /* Hide overflow */
+    align-items: center;
+}
+
+.main-image {
+    position: relative;
+    width: 100%;
+    height: auto;
+    object-fit: cover; /* Makes the image cover the container */
+}
+
+.images img {
+    width: 100%; /* Адаптивная ширина изображений */
+    height: 100%;
+}
+
+.thumbnails {
+    flex-direction: column;
+    width: 30%;
+    margin-right: 5px;
+}
+
+.thumbnail {
+    position: relative;
+}
+
+@media (min-width: 768px) {
+    
+    .images {
+        width: 400px; /* Фиксированная ширина для изображений на больших экранах */
+        border-right: 1px solid #ddd;
+    }
+
+}
+
+@media (max-width: 480px) {
+    .main-image {
+        height: 150px; /* Уменьшаем высоту для мобильных */
+    }
+}

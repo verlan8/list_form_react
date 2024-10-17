@@ -1,0 +1,24 @@
+.arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    z-index: 1; /* Ensure they are above the image */
+    border-radius: 50%; /* Round buttons */
+}
+
+.scroll-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+}
+
+.arrow.left {
+    left: 10px; /* Position to left */
+}
+
+.arrow.right {
+    right: 10px; /* Position to right */
+}

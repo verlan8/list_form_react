@@ -1,0 +1,51 @@
+.card {
+    display: flex;
+    flex-direction: column; /*По умолчанию карточка в столбик для мобильных */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    width: 100%;
+}
+
+.card-content {
+    padding: 10px; /* Уменьшенные отступы для мобильных */
+    width: 100%;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.card-content h3 {
+    margin: 0;
+    font-size: 1.5em; /* Размер заголовка */
+}
+
+.card-content p {
+    margin: 5px 0;
+    font-size: 0.7em; /* Уменьшенный размер текста для мобильных */
+}
+
+.card-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(40rem, 1fr)); /* Автоматически подстраивает количество колонн */
+    gap: 20px; /* Отступы между карточками */
+}
+
+/* Адаптационные стили для экранов от 768px и выше */
+@media (min-width: 768px) {
+    
+    .card {
+        flex-direction: row; /* Горизонтальное расположение для больших экранов */
+    }
+
+    .card-content {
+        padding: 20px; /* Увеличенные отступы для больших экранов */
+    }
+
+    .card-content h3 {
+        font-size: 1.75em; /* Увеличенный размер заголовка для больших экранов */
+    }
+
+    .card-content p {
+        font-size: 1em; /* Нормальный размер текста для больших экранов */
+    }
+}

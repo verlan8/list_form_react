@@ -1,0 +1,25 @@
+.rooms-list {
+    max-height: 10rem; /* Максимальная высота для прокручиваемого списка */
+    overflow-y: auto; /* Прокрутка для списка помещений */
+    border-top: 1px solid #ddd;
+    padding-top: 1%;
+}
+
+.rooms-list-container {
+    background-color: var(--background-color, #fff); /* Можно использовать переменные CSS для адаптивных тем */
+    margin: 0 auto; /* Центрируем контейнер */
+}
+
+.MuiListItemButton-root {
+    margin-bottom: 10px; /* Отступы между элементами списка */
+}
+
+.Mui-selected {
+    background-color: rgba(0, 0, 255, 0.2); /* Фон для выделенного элемента */
+}
+
+@media (min-width: 768px) {
+    .rooms-list-container {
+        max-width: 100%; /* На мобильных устройствах занимаем 100% ширины */
+    }
+}

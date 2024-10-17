@@ -1,6 +1,6 @@
 import React from 'react';
 import Card from './card';
-import '../styles/card.css'
+import '../styles/buildingOffices/cardList.css'
 
 const CardList = ({ dataList }) => {
     return (

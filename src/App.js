@@ -1,20 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {
-    Box,
-    Typography,
     Container,
     Paper,
 } from '@mui/material';
 import CardList from './components/cardlist';
 import Search from './components/search';
 import useFetchData from './hooks/useFetchData';
-import './styles/card.css'
+import NavBarHeader from './components/header';
+import ScrollToTop from './hooks/scrollToTop';
 
 //получаю list<byte[]> images -> преобразовать в картинки
 const AppComponent = () => {
     const [data, fetchData] = useFetchData();
-    // const [data, setData] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [minArea, setMinArea] = useState("");
     const [maxArea, setMaxArea] = useState("");
@@ -63,24 +61,25 @@ const AppComponent = () => {
     };
 
     return (
-        <Container className='building-office-container custom-container' maxWidth={false}>
-            <Typography variant="h4" gutterBottom>
-                Данные из базы
-            </Typography>
-            <Search
-                searchTerm={searchTerm}
-                minArea={minArea}
-                maxArea={maxArea}
-                minRent={minRent}
-                maxRent={maxRent}
-                handleSearchChange={handleSearchChange}
-                handleFilterChange={handleFilterChange}
-                handleSearch={handleSearch}
-            />
-            <Paper className='paper-classlist custom-paper' elevation={3} sx={{ padding: 2 }}>
-                <CardList dataList={data} />
-            </Paper>
-        </Container>
+        <>
+            <NavBarHeader></NavBarHeader>
+            <Container className='building-office-container custom-container' maxWidth={false}>
+                <Search
+                    searchTerm={searchTerm}
+                    minArea={minArea}
+                    maxArea={maxArea}
+                    minRent={minRent}
+                    maxRent={maxRent}
+                    handleSearchChange={handleSearchChange}
+                    handleFilterChange={handleFilterChange}
+                    handleSearch={handleSearch}
+                />
+                <Paper className='paper-classlist custom-paper' elevation={3} sx={{ padding: 2 }}>
+                    <CardList dataList={data} />
+                </Paper>
+            </Container>
+            <ScrollToTop/>
+        </>
     );
 };
 
