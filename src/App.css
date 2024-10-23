@@ -1,3 +1,51 @@
+.building-office-container custom-container {
+  display: flex;
+}
+
+.objects-params {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  justify-content: space-between;
+  padding-left: 12px;
+}
+
+.objects-sorting-list {
+  display: flex;
+  align-items: center;
+}
+
+.objects-sorting-title {
+  margin-right: 15px;
+}
+
+.MuiInputBase-root.MuiOutlinedInput-root.MuiInputBase-colorPrimary.objects-sorting-select  {
+  border-radius: 32px;
+}
+
+.objects-sorting-select {
+  box-sizing: content-box;
+  display: flex;
+  position: relative;
+  width: 100%;
+  text-align: left;
+ 
+}
+
+.objects-switch {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 20px;
+}
+
+.objects-switch-button {
+  position: relative;
+  display: flex;
+  margin-left: 10px;
+}
+
+/* by default */
 .App {
   text-align: center;
 }

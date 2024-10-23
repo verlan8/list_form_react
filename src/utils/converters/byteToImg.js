@@ -1,3 +1,5 @@
+// конвертер фотографий с бд
+
 import React from 'react';
 
 const ByteArrayToImage = ({ byteArray }) => {

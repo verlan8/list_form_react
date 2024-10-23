@@ -1,0 +1,19 @@
+/* потом убрать -> стили для помощи в верстке*/
+.search {
+    border: 3px solid #ddd;
+}
+/*  */
+
+
+.search {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 1rem 0 0 0;
+    border-radius: 8px;
+    gap: 10px;
+    align-items: center;
+}
+
+.MuiGrid-root {
+    margin: 0 0 0 0;
+}

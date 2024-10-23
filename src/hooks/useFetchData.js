@@ -1,4 +1,4 @@
-// hooks/useFetchData.js
+// hooks/useFetchData.js получение данных
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 

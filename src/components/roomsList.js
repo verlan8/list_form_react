@@ -1,3 +1,5 @@
+// Список помещений
+
 import React from 'react';
 import { 
     Box, 

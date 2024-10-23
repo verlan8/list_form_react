@@ -1,3 +1,5 @@
+// Список карточек зданий
+
 import React from 'react';
 import Card from './card';
 import '../styles/buildingOffices/cardList.css'

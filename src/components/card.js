@@ -1,3 +1,5 @@
+// Карточка здания
+
 import React, { useState } from 'react';
 import ByteArrayToImage from '../utils/converters/byteToImg';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';

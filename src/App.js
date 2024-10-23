@@ -1,43 +1,73 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {
+    Box,
+    Button,
     Container,
     Paper,
+    MenuItem,
+    Select
 } from '@mui/material';
 import CardList from './components/cardlist';
 import Search from './components/search';
-import useFetchData from './hooks/useFetchData';
 import NavBarHeader from './components/header';
 import ScrollToTop from './hooks/scrollToTop';
+import './App.css';
 
-//получаю list<byte[]> images -> преобразовать в картинки
 const AppComponent = () => {
-    const [data, fetchData] = useFetchData();
+    const [data, setData] = useState([]); // Changed from useFetchData
     const [searchTerm, setSearchTerm] = useState("");
     const [minArea, setMinArea] = useState("");
     const [maxArea, setMaxArea] = useState("");
     const [minRent, setMinRent] = useState("");
     const [maxRent, setMaxRent] = useState("");
 
-    const updateDataList = (data) => {
-        const dataList = data.map(item => ({
-            ...item,
-            images: item.images 
-        }));
-        fetchData(dataList);
+    const [selectedOption, setSelectedOption] = useState('Умолчанию');
+    const options = [
+        'Умолчанию',
+        'Дате обновления',
+        'Стоимости',
+        'Площади',
+        'Классу',
+        'Рейтингу здания',
+        'Расстоянию до метро',
+    ];
+
+    const handleFilterChange = (event) => {
+        setSelectedOption(event.target.value);
+    };
+    
+    const fetchData = async () => {
+        try {
+            const response = await axios.get('https://localhost:7168/api/ListForm');
+            setData(response.data);
+        } catch (error) {
+            console.error('Ошибка при получении данных', error);
+        }
     };
 
+    useEffect(() => {
+        fetchData(); // Initial fetch for data
+    }, []);
+
     const handleSearch = async () => {
+        if (!searchTerm && !minArea && !maxArea) {
+            await fetchData();
+            return;
+        }
+
         try {
-            const response = await axios.post('https://localhost:7168/api/ListForm/search', {
-                searchTerm,
-                minArea: minArea || null,
-                maxArea: maxArea || null,
-                minRent: minRent || null,
-                maxRent: maxRent || null
+            const response = await axios.get('https://localhost:7168/api/ListForm/search', {
+                params: {
+                    NameRus: searchTerm || null,
+                    StreetRus: searchTerm || null,
+                    MinAvailableArea: minArea || null,
+                    MaxAvailableArea: maxArea || null,
+                    MinRentPrice: minRent || null,
+                    MaxRentPrice: maxRent || null,
+                }
             });
-            updateDataList(response.data);
-            console.log(response.data);
+            setData(response.data); // Set search results directly to the state
         } catch (error) {
             console.error('Ошибка при получении данных', error);
         }
@@ -47,7 +77,7 @@ const AppComponent = () => {
         setSearchTerm(e.target.value);
     };
 
-    const handleFilterChange = (e) => {
+    const handleRangeChange = (e) => {
         const { name, value } = e.target;
         if (name === "minArea" || name === "maxArea") {
             const numValue = value === "" ? "" : parseFloat(value);
@@ -61,25 +91,64 @@ const AppComponent = () => {
     };
 
     return (
-        <>
-            <NavBarHeader></NavBarHeader>
+        <div>
+            <NavBarHeader />
             <Container className='building-office-container custom-container' maxWidth={false}>
-                <Search
-                    searchTerm={searchTerm}
-                    minArea={minArea}
-                    maxArea={maxArea}
-                    minRent={minRent}
-                    maxRent={maxRent}
-                    handleSearchChange={handleSearchChange}
-                    handleFilterChange={handleFilterChange}
-                    handleSearch={handleSearch}
-                />
+                <Paper>
+                    <Search
+                        searchTerm={searchTerm}
+                        minArea={minArea}
+                        maxArea={maxArea}
+                        minRent={minRent}
+                        maxRent={maxRent}
+                        handleSearchChange={handleSearchChange}
+                        handleFilterChange={handleRangeChange}
+                        handleSearch={handleSearch}
+                    />
+                </Paper>
+                
+                <Paper className='objects-params'>
+                    {/* <Box className='objects-params'> */}
+                        <section className='objects-sorting-list'>
+                            <b className='objects-sorting-title'>
+                                Сортировать по
+                            </b>
+                            <Select
+                                className='objects-sorting-select'
+                                value={selectedOption}
+                                onChange={handleFilterChange}
+                            >
+                                {options.map((option, index) => (
+                                    <MenuItem key={index} value={option}>
+                                    {option}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </section>
+                        <Container className='objects-switch'>
+                            <Button
+                                className='objects-switch-button'
+                                onClick={null} 
+                            >
+                                Здания
+                            </Button>
+                            <Button
+                                className='objects-switch-button'
+                                onClick={null} 
+                            >
+                                Помещения
+                            </Button>
+                        </Container>
+                    {/* </Box> */}
+                </Paper>
+                
                 <Paper className='paper-classlist custom-paper' elevation={3} sx={{ padding: 2 }}>
                     <CardList dataList={data} />
                 </Paper>
+                    
             </Container>
-            <ScrollToTop/>
-        </>
+            <ScrollToTop />
+        </div>
     );
 };
 
