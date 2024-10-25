@@ -65,12 +65,12 @@ const Card = ({ data }) => {
             </div>
 
             <CardContent className='card-content'>
-                <Typography variant="h6">{data.nameRus} / {data.nameEng}</Typography>
-                <Typography variant="body2">Статус: {data.status}</Typography>
-                <Typography variant="body2">Город: {data.addressCity}</Typography>
-                <Typography variant="body2">Общее доступное количество: {data.availableTotalAll} м²</Typography>
-                <Typography variant="body2">Площадь офиса: {data.glaOffice} м²</Typography>
-                <Typography variant="body2">Дата проверки: {data.researchCheckdate}</Typography>
+                <Typography variant="h6">{data.office.name_rus} / {data.office.name_eng}</Typography>
+                <Typography variant="body2">Статус: {data.office.status}</Typography>
+                <Typography variant="body2">Улица: {data.office.address_street_ru}</Typography>
+                <Typography variant="body2">Общее доступное количество: {data.office.available_total_all} м²</Typography>
+                <Typography variant="body2">Площадь офиса: {data.office.gla_office} м²</Typography>
+                <Typography variant="body2">Дата проверки: {data.office.research_check_date}</Typography>
                 {data.rooms && data.rooms.length > 0 ? (
                     <>
                         <Typography variant="body2">Доступные помещения:</Typography> 

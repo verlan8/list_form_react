@@ -1,7 +1,7 @@
-// Список карточек зданий
+// Список карточек офисных зданий
 
 import React from 'react';
-import Card from './card';
+import Card from './officeCard';
 import '../styles/buildingOffices/cardList.css'
 
 const CardList = ({ dataList }) => {

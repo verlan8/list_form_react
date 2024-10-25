@@ -1,11 +1,13 @@
 // Поисковая панель
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Box,
     Button,
     TextField,
-    Container
+    Container,
+    Modal,
+    Typography
 } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import '../styles/buildingOffices/search.css'
@@ -20,6 +22,50 @@ const Search = ({
     handleFilterChange, 
     handleSearch 
 }) => {
+
+    const [filters, setFilters] = useState({ searchTerm, minArea, maxArea, minRent, maxRent });
+    const [openModal, setOpenModal] = useState(false);
+
+    useEffect(() => {
+        const savedFilters = JSON.parse(localStorage.getItem('savedFilters'));
+        if (savedFilters) {
+            setFilters(savedFilters);
+        }
+    }, []);
+
+    const handleSaveFilters = () => {
+        localStorage.setItem('savedFilters', JSON.stringify(filters));
+    };
+
+    const handleResetFilters = () => {
+        setFilters({ searchTerm: '', minArea: '', maxArea: '', minRent: '', maxRent: '' });
+        localStorage.removeItem('savedFilters');
+    };
+
+    const handleOpenModal = () => {
+        setOpenModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setOpenModal(false);
+    };
+
+    const handleModalChange = (e) => {
+        // модальное окна
+    };
+
+    const handleFiltersChange = (e) => {
+        const { name, value } = e.target;
+        
+        const numValue = value === "" ? "" : parseFloat(value);
+        setFilters((prevFilters) => ({
+            ...prevFilters,
+            [name]: numValue,
+        }));
+        
+        handleFilterChange(e);
+    };
+
     return (
         <Container className='search-panel'>
             <Box mb={2} className="search">
@@ -39,8 +85,8 @@ const Search = ({
                             name="minArea" 
                             label="Мин. площадь" 
                             variant="outlined" 
-                            value={minArea} 
-                            onChange={handleFilterChange} 
+                            value={filters.minArea} 
+                            onChange={handleFiltersChange} 
                         />
                     </Grid>
                     <Grid>
@@ -49,28 +95,28 @@ const Search = ({
                             name="maxArea" 
                             label="Макс. площадь" 
                             variant="outlined" 
-                            value={maxArea} 
-                            onChange={handleFilterChange} 
+                            value={filters.maxArea} 
+                            onChange={handleFiltersChange} 
                         />
                     </Grid>
                     <Grid>
                         <TextField 
                             fullWidth 
                             name="minRent" 
-                            label="Мин. аренда" 
+                            label="Бюджет от, Р" 
                             variant="outlined" 
-                            value={minRent} 
-                            onChange={handleFilterChange} 
+                            value={filters.minRent} 
+                            onChange={handleFiltersChange} 
                         />
                     </Grid>
                     <Grid>
                         <TextField 
                             fullWidth 
                             name="maxRent" 
-                            label="Макс. аренда" 
+                            label="Бюджет до, Р" 
                             variant="outlined" 
-                            value={maxRent} 
-                            onChange={handleFilterChange} 
+                            value={filters.maxRent} 
+                            onChange={handleFiltersChange} 
                         />
                     </Grid>
                 </Grid>
@@ -80,15 +126,23 @@ const Search = ({
                 <Button 
                     variant="contained" 
                     color="primary" 
-                    onClick={null} 
-                    className='save-filter'
+                    onClick={handleResetFilters} 
+                    className='clear-filter'
                 >
-                    Сохранить фильтр
+                    Сбросить
                 </Button>
                 <Button 
                     variant="contained" 
                     color="primary" 
-                    onClick={null} 
+                    onClick={handleSaveFilters} 
+                    className='save-filter'
+                >
+                    Сохранить фильтры
+                </Button>
+                <Button 
+                    variant="contained" 
+                    color="primary" 
+                    onClick={handleOpenModal} 
                     className='all-filters'
                 >
                     Все фильтры
@@ -111,6 +165,44 @@ const Search = ({
                 </Button>
                 
             </Box>
+
+
+            <Modal open={openModal} onClose={handleCloseModal}>
+                <Box sx={{ padding: 4, backgroundColor: 'white' }}>
+                    <Typography variant="h6" component="h2">Расширенные настройки поиска</Typography>
+                    <Grid container spacing={2} mt={2}>
+                        {/* основная ифнормация */}
+                        <Grid item xs={12}>
+                            <TextField label="Класс" fullWidth onChange={handleModalChange} />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField label="Год пойстройки" fullWidth onChange={handleModalChange} />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField label="Этажность" fullWidth onChange={handleModalChange} />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField label="Общая площадь" fullWidth onChange={handleModalChange} />
+                        </Grid>
+                        {/* локация */}
+                        <Grid item xs={12}>
+                            <TextField label="Ближайшая станция метро" fullWidth onChange={handleModalChange} />
+                        </Grid>
+                        {/* парковка */}
+                        {/* дополнительно */}
+                        <Grid item xs={12}>
+                            <TextField label="Девелопер" fullWidth onChange={handleModalChange} />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField label="Управляющая компания" fullWidth onChange={handleModalChange} />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField label="Владелец здания" fullWidth onChange={handleModalChange} />
+                        </Grid>
+                    </Grid>
+                    <Button onClick={handleCloseModal} color="primary">Закрыть</Button>
+                </Box>
+            </Modal>
         </Container>
     );
 };
