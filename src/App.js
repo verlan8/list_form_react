@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef} from 'react';
 import axios from 'axios';
 import {
     Button,
     Container,
     Paper,
     MenuItem,
-    Select
+    Select,
+    Typography
 } from '@mui/material';
 import CardList from './components/cardlist';
 import RoomCardList from './components/roomCardList'
@@ -22,9 +23,11 @@ const AppComponent = () => {
     const [minRent, setMinRent] = useState("");
     const [maxRent, setMaxRent] = useState("");
     const [isBuildingView, setIsBuildingView] = useState(true); 
-
-
+    const [loading, setLoading] = useState(true);
+    const isBuildingViewRef = useRef(isBuildingView);
     const [selectedOption, setSelectedOption] = useState('Умолчанию');
+
+
     const options = [
         'Умолчанию',
         'Дате обновления',
@@ -41,59 +44,80 @@ const AppComponent = () => {
     
     const fetchData = async (type) => {
         const url = type === 'officeBuildings' 
-            ? 'https://localhost:7168/api/ListForm/officeBuldings'
+            ? 'https://localhost:7168/api/ListForm/officeBuildings'
             : 'https://localhost:7168/api/ListForm/rooms';
+
+        setLoading(true);
         try {
             const response = await axios.get(url);
             console.log("get response", response.data);
             setData(response.data);
         } catch (error) {
             console.error('Ошибка при получении данных', error);
+        } finally {
+            setLoading(false);
         }
     };
 
     useEffect(() => {
-        fetchData('officeBuildings');
+        fetchData(isBuildingView ? 'officeBuildings' : 'rooms');
     }, []);
 
-    const handleViewChange = (viewType) => {
+    const handleViewChange = async (viewType) => {
         console.log("viewtype", viewType);
-        setIsBuildingView(viewType === 'officeBuldings');
-        fetchData(viewType); 
+        setIsBuildingView(viewType === 'officeBuildings');
+        isBuildingViewRef.current = viewType === 'officeBuildings';
+        console.log("handleViewChange", isBuildingViewRef);
+        setData([]);
+
+        if (searchTerm || minArea || maxArea || minRent || maxRent) {
+            await handleSearch();
+        } else {
+            await fetchData(viewType);
+        }
     };
 
     const handleSearch = async () => {
-        if (!searchTerm && !minArea && !maxArea) {
-            await fetchData();
+        console.log("handleSearch", isBuildingViewRef);
+        const type = isBuildingViewRef.current ? 'officeBuildings' : 'rooms';
+        
+        if (!searchTerm && !minArea && !maxArea && !minRent && !maxRent) {
+            console.log("no filters!!!");
+            await fetchData(type);
             return;
         }
-
+        
         try {
-            console.log('search before', maxArea, typeof(maxArea));
-            console.log('Parameters being sent:', {
-                NameRus: searchTerm || null,
-                StreetRus: searchTerm || null,
-                MinAvailableArea: minArea !== "" ? parseFloat(minArea) : null,
-                MaxAvailableArea: maxArea !== "" ? parseFloat(maxArea) : null,
-                MinRentPrice: minRent !== "" ? parseFloat(minRent) : null,
-                MaxRentPrice: maxRent !== "" ? parseFloat(maxRent) : null,
-            });
-            const response = await axios.get('https://localhost:7168/api/ListForm/searchBuildingOffice', {
-                params: {
+            if (data && !loading) {
+                console.log('search before', maxArea, typeof(maxArea));
+                console.log('Parameters being sent:', {
                     NameRus: searchTerm || null,
                     StreetRus: searchTerm || null,
-                    MinArea: minArea !== "" ? parseFloat(minArea) : null,
-                    MaxArea: maxArea !== "" ? parseFloat(maxArea) : null,
+                    MinAvailableArea: minArea !== "" ? parseFloat(minArea) : null,
+                    MaxAvailableArea: maxArea !== "" ? parseFloat(maxArea) : null,
                     MinRentPrice: minRent !== "" ? parseFloat(minRent) : null,
                     MaxRentPrice: maxRent !== "" ? parseFloat(maxRent) : null,
-                }
-            });
-            console.log('search', response.data);
-            setData(response.data);
+                });
+                const response = await axios.get(`https://localhost:7168/api/ListForm/search${type}`, {
+                    params: {
+                        NameRus: searchTerm || null,
+                        StreetRus: searchTerm || null,
+                        MinArea: minArea !== "" ? parseFloat(minArea) : null,
+                        MaxArea: maxArea !== "" ? parseFloat(maxArea) : null,
+                        MinRentPrice: minRent !== "" ? parseFloat(minRent) : null,
+                        MaxRentPrice: maxRent !== "" ? parseFloat(maxRent) : null,
+                    }
+                });
+                console.log("GET", response);
+                console.log('search', response.data);
+                setData(response.data);
+            }
+            
         } catch (error) {
             console.error('Ошибка при получении данных', error);
         }
     };
+
 
     const handleSearchChange = (e) => {
         setSearchTerm(e.target.value);
@@ -134,6 +158,11 @@ const AppComponent = () => {
                         handleSearchChange={handleSearchChange}
                         handleFilterChange={handleRangeChange}
                         handleSearch={handleSearch}
+                        setMinArea={setMinArea}
+                        setMaxArea={setMaxArea}
+                        setMinRent={setMinRent}
+                        setMaxRent={setMaxRent}
+                        setSearchTerm={setSearchTerm}
                     />
                 </Paper>
                 
@@ -171,9 +200,15 @@ const AppComponent = () => {
                 </Paper>
                 
                 <Paper className='paper-classlist custom-paper' elevation={3} sx={{ padding: 2 }}>
-                    {isBuildingView 
-                        ? <CardList dataList={data} />
-                        : <RoomCardList dataList={data} />} {/* Render the appropriate card list */}
+                    {loading ? (
+                        <Typography variant="body2">Загрузка данных...</Typography> // Show a loading message or spinner
+                    ) : (
+                        data.length > 0 ? (
+                            isBuildingViewRef.current ? <CardList dataList={data} /> : <RoomCardList dataList={data} />
+                        ) : (
+                            <Typography variant="body2">Нет данных для отображения.</Typography>
+                        )
+                    )}
                 </Paper>
                     
             </Container>

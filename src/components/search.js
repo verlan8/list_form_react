@@ -9,6 +9,7 @@ import {
     Modal,
     Typography
 } from '@mui/material';
+import { MAX_LENGTH_FILTERS, ERROR_MESSAGES } from '../constants/constants.js';
 import Grid from '@mui/material/Grid2';
 import '../styles/buildingOffices/search.css'
 
@@ -20,11 +21,31 @@ const Search = ({
     maxRent, 
     handleSearchChange, 
     handleFilterChange, 
-    handleSearch 
+    handleSearch,
+    setMinArea,
+    setMaxArea,
+    setMinRent,
+    setMaxRent,
+    setSearchTerm
 }) => {
 
-    const [filters, setFilters] = useState({ searchTerm, minArea, maxArea, minRent, maxRent });
+    const [filters, setFilters] = useState({ 
+        searchTerm, 
+        minArea, 
+        maxArea, 
+        minRent, 
+        maxRent 
+    });
     const [openModal, setOpenModal] = useState(false);
+    const [error, setError] = useState({
+        minArea: false,
+        maxArea: false,
+        minRent: false,
+        maxRent: false,
+    });
+    const [tempValue, setTempValue] = useState({});
+    const [isError, setIsError] = useState({});
+
 
     useEffect(() => {
         const savedFilters = JSON.parse(localStorage.getItem('savedFilters'));
@@ -34,12 +55,23 @@ const Search = ({
     }, []);
 
     const handleSaveFilters = () => {
+        console.log("save filters", filters);
         localStorage.setItem('savedFilters', JSON.stringify(filters));
     };
 
+    const handleLoadFilters = () => {
+        
+    }
+
     const handleResetFilters = () => {
-        setFilters({ searchTerm: '', minArea: '', maxArea: '', minRent: '', maxRent: '' });
+        setTempValue({});
+        setMinArea('');
+        setMaxArea('');
+        setMinRent('');
+        setMaxRent('');
+        setSearchTerm('');
         localStorage.removeItem('savedFilters');
+        setError({ minArea: false, maxArea: false, minRent: false, maxRent: false });
     };
 
     const handleOpenModal = () => {
@@ -53,18 +85,76 @@ const Search = ({
     const handleModalChange = (e) => {
         // модальное окна
     };
+    
+    // обработка вставки значений
+    const handleDecimalPaste = (e) => {
+        e.preventDefault();
+        console.log("e", e);
+        const text = e.clipboardData.getData('text');
+        console.log("text", text);
+        if (/^[1-9]\d*$/.test(text) && text.length <= MAX_LENGTH_FILTERS) {
+            e.target.value = text;
+            if (e.target.name === 'minArea') {
+                setMinArea(text);
+            } else if (e.target.name === 'maxArea') {
+                setMaxArea(text);
+            } else if (e.target.name === 'minRent') {
+                setMinRent(text);
+            } else if (e.target.name === 'maxRent') {
+                setMaxRent(text);
+            }
+            handleFiltersChange(e);
+        }
+    };
 
     const handleFiltersChange = (e) => {
         const { name, value } = e.target;
-        
-        const numValue = value === "" ? "" : parseFloat(value);
-        setFilters((prevFilters) => ({
-            ...prevFilters,
-            [name]: numValue,
-        }));
-        
-        handleFilterChange(e);
+        console.log("value", value);
+        const regex = /^[1-9]\d*$/; // Положительные целые или десятичные числа
+        if (value === "" || regex.test(value)) {
+
+            setTempValue((prev) => ({
+                ...prev,
+                [name]: value,
+            }));
+
+            setIsError((prev) => ({
+                ...prev,
+                [name]: false,
+            }));
+
+        } else {
+            // Устанавливаем ошибку при некорректном вводе
+            setIsError((prev) => ({
+                ...prev,
+                [name]: true,
+            }));
+        }
     };
+
+    // действия при потере фокуса поля
+    const handleDecimalBlur = (e) => {
+        const { name, value } = e.target;
+
+        const regex = /^[1-9]\d*$/;
+        if (regex.test(value)) {
+            const numValue = parseFloat(value);
+            setFilters((prevFilters) => ({
+                ...prevFilters,
+                [name]: numValue,
+            }));
+        } else {
+            // Если значение некорректно, сбрасываем поле к пустому значению
+            setFilters((prevFilters) => ({
+                ...prevFilters,
+                [name]: "",
+            }));
+            setTempValue((prev) => ({
+                ...prev,
+                [name]: "",
+            }));
+        }
+    }
 
     return (
         <Container className='search-panel'>
@@ -84,9 +174,24 @@ const Search = ({
                             fullWidth 
                             name="minArea" 
                             label="Мин. площадь" 
-                            variant="outlined" 
-                            value={filters.minArea} 
-                            onChange={handleFiltersChange} 
+                            variant="outlined"
+                            value={tempValue.minArea || ''} 
+                            error={isError.minArea}
+                            helperText={isError.minArea ? ERROR_MESSAGES.INVALID_VALUE : ""}
+                            onPaste={handleDecimalPaste}
+                            onBlur={handleDecimalBlur}
+                            onChange={(e) => {
+                                const value = e.target.value;
+                                if (value.length <= MAX_LENGTH_FILTERS) { 
+                                    handleFiltersChange(e); 
+                                    setMinArea(value); 
+                                }
+                            }}
+                            onKeyPress={(e) => {
+                                if (!/^[0-9]\d*$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Enter') {
+                                    e.preventDefault();
+                                }
+                            }}
                         />
                     </Grid>
                     <Grid>
@@ -95,8 +200,23 @@ const Search = ({
                             name="maxArea" 
                             label="Макс. площадь" 
                             variant="outlined" 
-                            value={filters.maxArea} 
-                            onChange={handleFiltersChange} 
+                            onPaste={handleDecimalPaste}
+                            value={tempValue.maxArea || ''} 
+                            error={isError.maxArea}
+                            helperText={isError.maxArea ? ERROR_MESSAGES.INVALID_VALUE : ""}
+                            onBlur={handleDecimalBlur}
+                            onChange={(e) => {
+                                const value = e.target.value;
+                                if (value.length <= MAX_LENGTH_FILTERS) { 
+                                    handleFiltersChange(e); 
+                                    setMaxRent(value); 
+                                }
+                            }}
+                            onKeyPress={(e) => {
+                                if (!/^[0-9]\d*$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Enter') {
+                                    e.preventDefault();
+                                }
+                            }}
                         />
                     </Grid>
                     <Grid>
@@ -105,8 +225,22 @@ const Search = ({
                             name="minRent" 
                             label="Бюджет от, Р" 
                             variant="outlined" 
-                            value={filters.minRent} 
-                            onChange={handleFiltersChange} 
+                            value={tempValue.minRent || ''} 
+                            error={isError.minRent}
+                            helperText={isError.minRent ? ERROR_MESSAGES.INVALID_VALUE : ""}
+                            onBlur={handleDecimalBlur}
+                            onChange={(e) => {
+                                const value = e.target.value;
+                                if (value.length <= MAX_LENGTH_FILTERS) { 
+                                    handleFiltersChange(e); 
+                                    setMinRent(value); 
+                                }
+                            }}
+                            onKeyPress={(e) => {
+                                if (!/^[0-9]\d*$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Enter') {
+                                    e.preventDefault();
+                                }
+                            }}
                         />
                     </Grid>
                     <Grid>
@@ -115,8 +249,22 @@ const Search = ({
                             name="maxRent" 
                             label="Бюджет до, Р" 
                             variant="outlined" 
-                            value={filters.maxRent} 
-                            onChange={handleFiltersChange} 
+                            value={tempValue.maxRent || ''} 
+                            error={isError.maxRent}
+                            helperText={isError.maxRent ? ERROR_MESSAGES.INVALID_VALUE : ""}
+                            onBlur={handleDecimalBlur}
+                            onChange={(e) => {
+                                const value = e.target.value;
+                                if (value.length <= MAX_LENGTH_FILTERS) { 
+                                    handleFiltersChange(e); 
+                                    setMaxRent(value); 
+                                }
+                            }}
+                            onKeyPress={(e) => {
+                                if (!/^[0-9]\d*$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Enter') {
+                                    e.preventDefault();
+                                }
+                            }}
                         />
                     </Grid>
                 </Grid>
@@ -142,6 +290,14 @@ const Search = ({
                 <Button 
                     variant="contained" 
                     color="primary" 
+                    onClick={handleLoadFilters} 
+                    className='load-filter'
+                >
+                    Загрузить фильтры
+                </Button>
+                <Button 
+                    variant="contained" 
+                    color="primary" 
                     onClick={handleOpenModal} 
                     className='all-filters'
                 >
@@ -159,11 +315,10 @@ const Search = ({
                     variant="contained" 
                     color="primary" 
                     onClick={handleSearch} 
-                    className='search-button'
+                    className="search-button"
                 >
                     Поиск
                 </Button>
-                
             </Box>
 
 

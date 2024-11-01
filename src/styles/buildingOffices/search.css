@@ -3,7 +3,10 @@
     border: 3px solid #ddd;
 }
 /*  */
-
+.search-panel {
+    padding: 1rem;
+    box-sizing: border-box;
+}
 
 .search {
     display: flex;
@@ -14,6 +17,55 @@
     align-items: center;
 }
 
+.search-bottom-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 1rem;
+}
+
 .MuiGrid-root {
     margin: 0 0 0 0;
+}
+
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+/* Для мобильных телефонов */
+@media (max-width: 599px) {
+    .search {
+        flex-direction: column;
+    }
+
+    .search-bottom-items {
+        flex-direction: column;
+    }
+}
+
+/* Для планшетов */
+@media (min-width: 600px) and (max-width: 899px) {
+    .search {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .search-bottom-items {
+        justify-content: space-between;
+    }
+}
+
+/* Для ноутбуков */
+@media (min-width: 900px) {
+    .search {
+        flex-direction: row;
+        justify-content: space-evenly;
+    }
+
+    .search-bottom-items {
+        justify-content: space-evenly;
+    }
 }

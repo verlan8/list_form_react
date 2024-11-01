@@ -4,11 +4,34 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    border: none;
     cursor: pointer;
     padding: 10px;
-    z-index: 1; /* Ensure they are above the image */
+    background-color: rgba(255, 255, 255, 0.7);
+    z-index: 10; /* Ensure they are above the image */
     border-radius: 50%; /* Round buttons */
+    transition: background-color 0.3s;
+}
+
+.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeMedium.zoom-button {
+    position: absolute;
+}
+
+.zoom-button {
+    top: 0%;
+    right: 0;
+    transform: translateY(-10%);
+    z-index: 10;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeMedium.arrow.arrow-left 
+{
+    position: absolute;
+}
+
+.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeMedium.arrow.arrow-right {
+    position: absolute;
 }
 
 .scroll-to-top {
@@ -17,10 +40,14 @@
     right: 20px;
 }
 
-.arrow.left {
-    left: 10px; /* Position to left */
+.arrow-left {
+    left: 0; /* Position to left */
 }
 
-.arrow.right {
-    right: 10px; /* Position to right */
+.arrow-right {
+    right: 0; /* Position to right */
+}
+
+.arrow:hover {
+    background-color: rgba(255, 255, 255, 1);
 }

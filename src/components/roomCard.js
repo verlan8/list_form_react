@@ -14,6 +14,7 @@ import '../styles/buildingOffices/images.css'
 import '../styles/buildingOffices/arrow.css'
 
 const Card = ({ data }) => {
+    // console.log("Room card", data);
     const [currentIndex, setCurrentIndex] = useState(0);
 
     const nextImage = () => {
@@ -22,6 +23,29 @@ const Card = ({ data }) => {
 
     const prevImage = () => {
         setCurrentIndex((prevIndex) => (prevIndex - 1 + data.images.length) % data.images.length);
+    };
+
+    const [selectedOption, setSelectedOption] = useState('Умолчанию');
+    const options = [
+        'Офис',
+        'Банк',
+        'Торговое помещение',
+        'Помещение для конференций',
+        'Отель',
+        'Дата-центр',
+        'Жилье',
+        'Спортивный центр',
+        'Склад ',
+        'Рабочее место/Сервисное помещение',
+        'Производство',
+        'Мезонин',
+        'ПСН',
+        'Тренинг центр',
+        'Коворкинг'
+    ];
+
+    const handleFilterChange = (event) => {
+        setSelectedOption(event.target.value);
     };
 
     return (
@@ -63,7 +87,10 @@ const Card = ({ data }) => {
             </div>
 
             <CardContent className='card-content'>
-                
+                <Typography variant="body2">Тип помещения: {data.room.use_type}</Typography>
+                <Typography variant="body2">Площадь: {data.room.unit_size} м²</Typography>
+                <Typography variant="body2">Бюджет: {data.room.unit_size} м²</Typography>
+                <Typography variant="body2">{data.room.floor} этаж из {data.buildingOffice.upper_floors}</Typography>
             </CardContent>
         </MuiCard >
     );
