@@ -6,7 +6,7 @@ import '../styles/buildingOffices/cardList.css';
 
 const RoomCardList = ({ dataList }) => {
     return (
-        <div className="card-list">
+        <div className='card-list'>
             {dataList.map((data, index) => (
                 <RoomCard key={index} data={data} />
             ))}
