@@ -2,12 +2,14 @@
   display: flex;
 }
 
+
 .objects-params {
   display: flex;
   align-items: center;
   margin-top: 20px;
   justify-content: space-between;
   padding-left: 12px;
+  margin-bottom: 1%;
 }
 
 .objects-sorting-list {
@@ -17,6 +19,8 @@
 
 .objects-sorting-title {
   margin-right: 15px;
+  max-width: 120%;
+  white-space: nowrap;
 }
 
 .MuiInputBase-root.MuiOutlinedInput-root.MuiInputBase-colorPrimary.objects-sorting-select  {
@@ -24,12 +28,49 @@
 }
 
 .objects-sorting-select {
-  box-sizing: content-box;
   display: flex;
   position: relative;
-  width: 100%;
+  padding: 5px 15px;
+  height: 30px;
   text-align: left;
- 
+}
+
+/* Измените стиль стрелки */
+.MuiSelect-iconOpen {
+  color: green; /* Зеленый цвет стрелки */
+}
+
+/* Измените стиль рамки при наведении */
+.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline,
+.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+  border-color: green !important; /* Зеленый цвет рамки при наведении и открытии */
+}
+
+.MuiOutlinedInput-root {
+  border-radius: 20px !important; /* Установите нужное значение */
+}
+
+
+.MuiPopover-paper {
+  border-radius: 15px !important; /* Установите нужное значение */
+}
+
+.MuiMenuItem-root.Mui-selected {
+  background-color: #d5f5e3 !important; /* Светло-зеленый для выделенных элементов */
+}
+
+.MuiMenuItem-root:hover {
+  background-color: #e8f6f3 !important; /* Светло-зеленый при наведении */
+}
+
+
+/* Убедитесь в выравнивании текста по левому краю */
+.MuiSelect-select {
+  text-align: left; /* Выравнивание текста по левому краю */
+}
+
+.MuiSelect-icon {
+  color: green; /* Зеленый цвет стрелки */
 }
 
 .objects-switch {
@@ -42,8 +83,32 @@
 .objects-switch-button {
   position: relative;
   display: flex;
-  margin-left: 10px;
+  color: #4a4a4a !important; /* Темно-серый цвет текста */
+  text-decoration: none;
+  margin-left: 20px;
+  transition: all 0.3s ease; /* Плавный переход для эффекта */
 }
+
+.objects-switch-button:hover {
+  color: #4a4a4a !important; /* Сохраняет темно-серый цвет */
+}
+
+.objects-switch-button::after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 2px;
+  background: green;
+  transition: width 0.3s;
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+}
+
+.objects-switch-button:hover::after {
+  width: 100%; /* Показывает зеленую черту при наведении */
+}
+
 
 /* by default */
 .App {

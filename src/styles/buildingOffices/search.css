@@ -1,71 +1,243 @@
 /* потом убрать -> стили для помощи в верстке*/
-.search {
-    border: 3px solid #ddd;
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+.opensans {
+  font-family: "Open Sans", sans-serif;
 }
-/*  */
-.search-panel {
-    padding: 1rem;
+/* input {
+    border: 1px solid rgb(194, 194, 194);
+    border-radius: 30px;
+    padding: 10px;
+    font-size: 16px;
+    width: 100%;
+    color: #444444;
     box-sizing: border-box;
+    font-family: "Open Sans";
+    margin-top: 20%;
+    transition: border-color 0.3s;
 }
 
-.search {
-    display: flex;
-    flex-wrap: wrap;
-    margin: 1rem 0 0 0;
-    border-radius: 8px;
-    gap: 10px;
-    align-items: center;
+input:focus {
+    border-color: green;
+    outline: none;
 }
+
+input::placeholder {
+    color: #444444;
+}
+
+input:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 80%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    white-space: nowrap;
+    z-index: 10;
+} 
+
+.search_input{
+    border: 1px solid rgb(194, 194, 194);
+    border-radius: 30px;
+    padding: 10px;
+    font-size: 16px;
+    width: 250%;
+    box-sizing: border-box;
+    margin-top: -10%;
+    font-family: "Open Sans";
+    color: #444444;
+    transition: border-color 0.3s;
+}
+
+.text-field-hover:hover .MuiInputLabel-root {
+    color: green;
+  }
+  
+.search_input:focus {
+    border-color: green;
+    outline: none;
+}
+
+.search_input::placeholder {
+    color: #444444;
+} */
 
 .search-bottom-items {
     display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
+    justify-content: space-between;
+    width: 100%;
+    padding-bottom: 1rem;
+}
+
+.show-at-map {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #444444;
+    font-weight: bold;
+    background-color: #FFFFFF;
+    border: 1px solid rgb(63, 148, 23);
+    border-radius: 20px;
+    text-align: center;
+    /* margin: 20px -150px; */
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.show-at-map:hover {
+    background-color: rgb(63, 148, 23);
+    color: #FFFFFF;
+    font-weight: bold;
+}
+.closeButton {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #444444;
+    font-weight: bold;
+    background-color: #FFFFFF;
+    border: 1px solid rgb(63, 148, 23);
+    border-radius: 20px;
+    text-align: center;
+    margin: 20px -150px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.closeButton:hover {
+    background-color: rgb(63, 148, 23);
+    color: #FFFFFF;
+    font-weight: bold;
+}
+.search-button {
+    background-color: rgb(63, 148, 23);;
+    color: white;
+    border: none;
+    padding: 10px 50px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: bold;
+    /* margin: 20px 168px; */
+    cursor: pointer;
+    border-radius: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.search-button:hover {
+    background-color: rgb(120, 184, 90);
+}
+.all-filters {
+    color: #444444;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: bold;
+    /* margin: 4px 150px; */
+    cursor: pointer;
+    background-color: transparent;
+}
+
+.all-filters:hover {
+    color: rgb(120, 184, 90);
+}
+.clear-filter {
+    color: #444444;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 4px -15px;
+    cursor: pointer;
+    background-color: transparent;
+}
+
+.search-panel .search {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+
+.clear-filter:hover {
+    color: red;
+}
+.save-filter {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #444444;
+    background-color: #FFFFFF;
+    border: 1px solid rgb(175, 175, 175);
+    border-radius: 20px;
+    text-align: center;
+    margin: 4px 15px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.save-filter:hover {
+    border-color: rgb(63, 148, 23);
+}
+
+.text-field-hover .MuiOutlinedInput-root {
+    border-radius: 30px;
+    transition: border-color 0.3s;
+    color: #444444;
+}
+
+.text-field-hover .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+    border-color: green;
+}
+
+.text-field-hover .MuiInputLabel-root.Mui-focused {
+    color: green;
+}
+
+.text-field-hover {
+    margin-top: 100px; /* Увеличьте значение для большего отступа */
+}
+
+
+/* выпадающий список Аренда/Субаренда/Продажа */
+.MuiInputBase-root.MuiOutlinedInput-root.MuiInputBase-colorPrimary.lease-type-sorting-select  {
+    border-radius: 32px;
+}
+  
+.lease-type-sorting-select {
+    display: flex;
+    position: relative;
+    padding: 5px 15px;
+    height: 56px;
+    margin-top: 8px;
+    text-align: left;
+}
+
+
+.object-filter-item {
+    position: relative;
     margin-top: 1rem;
+    margin-right: 1rem;
+    min-width: 150px;
 }
 
-.MuiGrid-root {
-    margin: 0 0 0 0;
+.searchTerm-textfield {
+    min-width: 300px !important;
 }
 
-
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
-  -webkit-appearance: none; 
-  margin: 0; 
-}
-
-/* Для мобильных телефонов */
-@media (max-width: 599px) {
-    .search {
-        flex-direction: column;
-    }
-
-    .search-bottom-items {
-        flex-direction: column;
-    }
-}
-
-/* Для планшетов */
-@media (min-width: 600px) and (max-width: 899px) {
-    .search {
-        flex-direction: row;
-        justify-content: space-between;
-    }
-
-    .search-bottom-items {
-        justify-content: space-between;
-    }
-}
-
-/* Для ноутбуков */
-@media (min-width: 900px) {
-    .search {
-        flex-direction: row;
-        justify-content: space-evenly;
-    }
-
-    .search-bottom-items {
-        justify-content: space-evenly;
+@media (min-width: 1200px) {
+    .css-5c1adp-MuiContainer-root {
+        max-width: 100%;
     }
 }

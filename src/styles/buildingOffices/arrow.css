@@ -10,16 +10,22 @@
     z-index: 10; /* Ensure they are above the image */
     border-radius: 50%; /* Round buttons */
     transition: background-color 0.3s;
+    border: 2px solid green;
+}
+
+.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeMedium {
+    color: #ffffff;
 }
 
 .MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeMedium.zoom-button {
     position: absolute;
+    display: flex;
 }
 
 .zoom-button {
     top: 0%;
-    right: 0;
-    transform: translateY(-10%);
+    right: 0%;
+    /* transform: translateY(-10%); */
     z-index: 10;
     cursor: pointer;
     padding: 10px;
@@ -49,5 +55,22 @@
 }
 
 .arrow:hover {
-    background-color: rgba(255, 255, 255, 1);
+    /* background-color: rgba(255, 255, 255, 1); */
+    background-color: green;
 }
+
+.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeMedium.scroll-top-arrow{
+    color: rgb(63, 148, 23);
+}
+
+.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeMedium {
+    border: 1px solid rgb(63, 148, 23);
+    background: rgba(0, 0, 0, 0.04);
+    /* --IconButton-hoverBg: rgba(225, 105, 31, 0.04); */
+    
+}
+
+/* .css-aixiz9-MuiButtonBase-root-MuiIconButton-root {
+    --IconButton-hoverBg: rgba(153, 211, 27, 0.04);
+} */
+

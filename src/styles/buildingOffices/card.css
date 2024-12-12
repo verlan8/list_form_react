@@ -43,11 +43,92 @@
         padding: 20px; /* Увеличенные отступы для больших экранов */
     }
 
-    .card-content h3 {
-        font-size: 1.75em; /* Увеличенный размер заголовка для больших экранов */
-    }
+}
 
-    .card-content p {
-        font-size: 1em; /* Нормальный размер текста для больших экранов */
-    }
+/* Room */
+
+.room-content {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 100%;
+    padding: 15px 6px 15px 15px;
+}
+
+.room-content-header {
+    display: flex;
+    flex-wrap: wrap;
+    padding-bottom: 1rem;
+    /* width: calc(100% - 40px); */
+}
+
+.room-content-header-left {
+    width: 50%;
+}
+
+.room-content-header-right {
+    width: 50%;
+}
+
+.room-list-container {
+    flex-shrink: 0;
+    width: 280px;
+    padding: 1rem 0.5rem 1rem 0.5rem;
+}
+
+.building-container {
+    padding: 15px 6px 15px 15px;
+}
+
+.building-content {
+    position: relative;
+    flex-shrink: 0;
+    width: 260px;
+    max-width: 100%;
+    line-height: 1.3;
+}
+
+.link-to-buildingOffice {
+    text-decoration: none;
+    text-decoration-color: rgb(63, 148, 23);
+    color:#2a2d33;
+}
+
+.link-to-buildingOffice:hover, .link-to-buildingOffice:focus, .link-to-buildingOffice:active {
+    text-decoration-color: darkgreen;
+    outline: none;
+    color: #2a2d33;
+}
+
+.building-class-wrapper {
+    display: inline-flex;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 12px;
+}
+
+.building-class-item {
+    padding: 2px 8px;
+    border-right: 1px solid #ccc;
+    /* white-space: nowrap; */
+    margin: auto;
+}
+
+.building-class-item:last-child {
+    border-right: none;
+    font-weight: bold;
+}
+
+.building-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    /* justify-content: center; */
+}
+
+.building-class-wrapper-room {
+    overflow: visible;
+    margin-bottom: 0;
 }
