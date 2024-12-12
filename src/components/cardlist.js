@@ -4,11 +4,11 @@ import React from 'react';
 import Card from './officeCard';
 import '../styles/buildingOffices/cardList.css'
 
-const CardList = ({ dataList }) => {
+const CardList = ({ dataList, leaseType }) => {
     return (
-        <div className="card-list" >
+        <div className='card-list' >
             {dataList.map((data, index) => (
-                <Card key={index} data={data} />
+                <Card key={index} data={data} leaseType={leaseType}/>
             ))}
         </div>
     );
