@@ -2,13 +2,13 @@
 
 import React from 'react';
 
-const ByteArrayToImage = ({ byteArray }) => {
+const ByteArrayToImage = ({ byteArray, className }) => {
     if (!byteArray) return null;
 
     const imageSrc = `data:image/jpeg;base64,${byteArray}`;
 
     return (
-        <img src={imageSrc} alt="" style={{ width: '100%', height: 'auto' }} />
+        <img src={imageSrc} loading='lazy' alt='' className={className} />
     );
 };
 

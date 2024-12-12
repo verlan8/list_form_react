@@ -1,8 +1,9 @@
 // Кнопка прокрутки в начало(самый вверх) страницы
 
-import React, { useEffect, useState } from "react";
-import { FaChevronUp } from "react-icons/fa";
+import React, { useEffect, useState } from 'react';
+import { FaChevronUp } from 'react-icons/fa';
 import { IconButton } from '@mui/material';
+import '../styles/buildingOffices/arrow.css'
 
 export default function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false);
@@ -48,15 +49,15 @@ export default function ScrollToTop() {
       }
     };
 
-    window.addEventListener("scroll", toggleVisibility);
+    window.addEventListener('scroll', toggleVisibility);
 
-    return () => window.removeEventListener("scroll", toggleVisibility);
+    return () => window.removeEventListener('scroll', toggleVisibility);
   }, []);
 
   return (
-    <div className="scroll-to-top">
+    <div className='scroll-to-top'>
       {isVisible && (
-        <IconButton onClick={smoothScroll}>
+        <IconButton onClick={smoothScroll} className='scroll-top-arrow'>
             <FaChevronUp />
         </IconButton>
       )}
