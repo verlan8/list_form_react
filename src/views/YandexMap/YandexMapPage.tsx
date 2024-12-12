@@ -15,7 +15,7 @@ import { BASE_URL } from '../../constants/constants';
 const YandexMapPage = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [hoverMarkers, setHoverMarkers] = useState({});
-    const [data, setData] = useState([]);
+    const [dataBuildings, setDataBuildings] = useState([]);
 
     const markerMouseOver = (id) => setHoverMarkers((previous) => ({ ...previous, [id]: true }));
     const markerMouseOut = (id) => setHoverMarkers((previous) => ({ ...previous, [id]: false }));
@@ -35,7 +35,7 @@ const YandexMapPage = () => {
         const url = `${BASE_URL}/ListForm/buildingOfficeMaps`;
         try {
             const response = await axios.get(url);
-            setData(response.data);
+            setDataBuildings(response.data);
             console.log('get response', response.data);
             // console.log(data);
             // setData(response.data);
@@ -152,20 +152,26 @@ const YandexMapPage = () => {
                             width: '100%', 
                             height: '800px' 
                         }}>
-                        {data.length > 0 && data.map((building, index) => (
-                            <Placemark
+                        {dataBuildings.length > 0 && dataBuildings.map((building, index) => {
+                            const lat = parseFloat(building.buildingOffice.address_y_coordinate);
+                            const lng = parseFloat(building.buildingOffice.address_x_coordinate);
+                        
+                            console.log("BUILDING", building);
+                            console.log(`${building.buildingOffice.name_rus}: (${lat}, ${lng})`); 
+                            return (<Placemark
                                 key={index}
-                                geometry={[building.address_y_coordinate, building.address_x_coordinate]}
+                                geometry={[lat, lng]}
                                 properties={{
-                                    hintContent: building.name_rus,
-                                    balloonContentHeader: building.name_rus,
-                                    balloonContentBody: building.gba,
+                                    hintContent: `<div> Название здания: ${building.buildingOffice.name_rus} </div>`,
+                                    balloonContentHeader: `<div> Название здания:  building.buildingOffice.name_rus </div>`,
+                                    balloonContentBody: `<div> Общая площадь:  building.buildingOffice.gba </div>`,
                                 }}
                                 options={{
                                     preset: 'islands#redIcon',
                                 }}
                             />
-                        ))} 
+                            );
+                        })} 
                         
                         {buildings.map((building, index) => (
                             <Placemark
