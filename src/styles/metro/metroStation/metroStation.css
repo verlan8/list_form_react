@@ -1,0 +1,7 @@
+.metro-station {
+    display: inline-flex;
+    flex-wrap: wrap;
+    position: relative;
+    align-items: center;
+    gap: 0.5rem;
+}

@@ -1,0 +1,31 @@
+/* стили для навигационной панели  */
+  
+.nav-mobile {
+    flex-grow: 1;
+    display: flex;
+}
+
+.nav-desktop {
+    flex-grow: 1;
+    display: flex;
+}
+
+.menu-button, .menu-item {
+    text-transform: none; /* Убрать автоматическое преобразование в прописные буквы */
+    color: white; /* Установите нужный цвет текста */
+}
+
+.nav-menu {
+    display: none; /* Прячем меню по умолчанию, можно изменить в медиа-запросах */
+}
+
+/* Пример медиа-запросов */
+@media (max-width: 900px) {
+    .nav-desktop {
+        display: none; /* Скрыть десктопное меню на мобильных */
+    }
+
+    .nav-menu {
+        display: block; /* Показываем мобильное меню на мобильных устройствах */
+    }
+}
