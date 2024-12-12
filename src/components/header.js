@@ -10,6 +10,7 @@ import Menu from '@mui/material/Menu';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
+import logo from '../assets/logos/core-xp_logo_green.png'
 import '../styles/header.css'
 
 const pages = [
@@ -34,28 +35,21 @@ const NavBarHeader = () => {
   };
 
   return (
-    <AppBar position="sticky">
+    <AppBar position="sticky" sx={{ backgroundColor: '#09ad67'}}>
       <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
+        <Toolbar disableGutters sx={{ justifyContent: 'space-between' }}>
+          <img
+            src={logo}
+            alt="Logo"
+            style={{
+              height: '40px', // Укажите нужную высоту
+              marginRight: '16px', // Отступ справа
+              display: 'block'
             }}
-          >
-            CORE-XP
-          </Typography>
+          
+          />
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+          <Box sx={{ flexGrow: 0, display: { xs: 'none', md: 'flex' }, alignItems: 'center', gap: 1 }}>
             <IconButton
               size="large"
               aria-label="account of current user"
